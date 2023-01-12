@@ -11,3 +11,9 @@ python -m unittest <testfile name> -v
 ```python
 python -m unittest shape_test.TestArea.test_triangle -v
 ```
+
+- To Run Multiple test selectively
+
+```python
+python -m unittest shape_test.TestArea.test_triangle shape_test.TestArea.test_rectangle -v
+```
