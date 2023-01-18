@@ -20,7 +20,7 @@ python -m unittest shape_test.TestArea.test_triangle -v
 python -m unittest shape_test.TestArea.test_triangle shape_test.TestArea.test_rectangle -v
 ```
 
-----
+---
 
 ## Pytest Framework
 
@@ -64,7 +64,7 @@ pytest -v -x
 ```
 
 - But if we want to keep a threshold if it crosses that then only stop the execution of all test, then with `-x` flag we need to also specify `--maxfail=<no>` Here `no` specifies an integer value which is a threshold i.e. tolerance value for number of failed test
-If we dont specify `maxfail` flag by default value is considered as `1`.
+  If we dont specify `maxfail` flag by default value is considered as `1`.
 
 ```python
 pytest -v -x --maxfail=2
@@ -96,3 +96,58 @@ pytest -v -rsf
 - Enable Python debugging only for the failed test use this flag `--pdb`
 - Enable Python debugging for each test case `--trace`
 - To call the same function will multiple paramater use this decorator e.g. `@pytest.mark.parametrize('ip1, ip2, res', [(1,2,3), (2.5,2.5,5.0)])` here `ip1, ip2` are inputs and `res` is the result and as a list the different param values are provided.
+
+---
+
+## Doc test
+
+Define test using Docstring, and then execute the test using.
+
+```python
+python -m doctest <filename> -v
+```
+
+If we want to run pytest but using doctest format
+
+```python
+python -m pytest --doctest-modules <filename> -v
+```
+
+If we want to run unittest framework using docttest, run the below command, but prior to that suite needs to be created. ex.
+
+```python
+python -m unittest <file_name> -v
+```
+
+File example to create suite
+
+```python
+import shape_area
+import unittest
+import doctest
+
+def load_tests(loader, tests, ignore):
+    tests.addTests(doctest.DocTestSuite(shape_area))
+    return tests
+```
+
+- If we want to match only one part of the ouput then we can use elipses `...`
+  and then we have use one directive called, `#doctest: +ELLIPSIS` and this will match except the `...` character
+  ex.
+
+```python
+  class MyOwnObject:
+    def __init__(self, name, number):
+        self.name = name
+        self.number = number
+
+
+    def create_new_MyOwnObject(name, number):
+    """
+    >>> create_new_MyOwnObject('Jaidip',1) #doctest: +ELLIPSIS
+    <doctest_object.MyOwnObject object at 0x...>
+    """
+    return MyOwnObject(name, number)
+```
+
+- To handle whitespace `#doctest: +NORMALIZE_WHITESPACE` this directive can be used.

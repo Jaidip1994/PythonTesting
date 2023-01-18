@@ -1,0 +1,8 @@
+
+>>> import shape_area_mod
+>>> shape_area_mod.rectangle(2,4)
+8
+>>> shape_area_mod.triangle(3,4)
+6.0
+>>> shape_area_mod.square(4)
+16
